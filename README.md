@@ -68,3 +68,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Please note The ASP.NET App Scanner is a tool intended for security testing and research purposes only. You must obtain explicit permission from the application owner before scanning any website or application that you do not own or do not have explicit authorization to test. Unauthorized scanning of websites or applications may be illegal and is strictly prohibited.
 
 The author of this script is not responsible for any misuse, unauthorized access, or damage caused by using this tool. Use the scanner at your own risk and with proper authorization.
+**NOTICE**
+The powershell scripts may print results related to false-positives.

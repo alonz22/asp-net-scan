@@ -1,4 +1,4 @@
-﻿function Check-CookieProperties {
+function Check-CookieProperties {
     param (
         [string]$file
     )
@@ -40,13 +40,18 @@ if (-not (Test-Path $path -PathType Container)) {
     exit
 }
 
-# Get all .aspx files in the given path recursively
-$aspxFiles = Get-ChildItem -Path $path -Filter "*.aspx" -Recurse
 
-# Perform checks on each .aspx file
+# Get all .aspx, .aspx.cs, and .cs files in the given path recursively
+$aspxFiles = Get-ChildItem -Path $path -Filter "*.aspx" -Recurse
+$aspxCSFiles = Get-ChildItem -Path $path -Filter "*.aspx.cs" -Recurse
+$csFiles = Get-ChildItem -Path $path -Filter "*.cs" -Recurse
+
+$allFiles = $aspxFiles + $aspxCSFiles + $csFiles  # Combine all the file arrays
+
 $matchesFound = $false
 $matchCounter = 0  # Initialize total match counter
-foreach ($file in $aspxFiles) {
+
+foreach ($file in $allFiles) {
     $matches, $count = Check-CookieProperties $file.FullName
     if ($matches) {
         $matchesFound = $true

@@ -2,6 +2,8 @@
 
 
 ## Overview
+Inspired by the challenges I faced manually checking my ASP.NET application for vulnerabilities, I developed these custom vulnerability scanners. With an aim to overcome the time-consuming process, these scanners automate the detection of potential security flaws.these checks cover a significant portion of the OWASP Top 10. While other paid and open-source tools exist, my personal journey drove me to create these tailored scanners to enhance the security posture of my application efficiently.
+
 This repository contains a PowerShell script that serves as an ASP.NET app scanner. The script can help identify potential security vulnerabilities in your ASP.NET applications. The scanner targets various aspects of web application security, including cookies, missing CSRF tokens, file uploads, hard-coded credentials, unencoded URLs, input validation, low-level encryption, web.config files, and unparameterized queries.
 
 ## Features
@@ -31,7 +33,8 @@ The scanner will start analyzing the files in the specified directory and its su
 After the scan is complete, the script will display any detected vulnerabilities and provide recommendations for mitigating the issues.
 
 ## Vulnerabilities Detected
-```1. Missing CSRF Tokens:
+```
+1. Missing CSRF Tokens:
 The scanner will identify HTML forms that use the POST method but do not include a hidden field with a CSRF token. CSRF protection is crucial to prevent Cross-Site Request Forgery attacks.
 
 2. Hard-Coded Credentials:
@@ -43,19 +46,22 @@ Unencoded URLs can lead to security vulnerabilities, such as data exposure or in
 4. Insecure Input Validation:
 The scanner will look for insecure input validation practices that could allow malicious input to compromise the application's security.
 
-5. Low-Level Encryption:
+5. Client Side Validation:
+The `Scan-Input-Validation.ps1` also identifies client-side validation implementations, which are less secure than server-side validation mechanisms. It helps detect potential vulnerabilities that may expose applications to security risks and data manipulation by malicious users.
+
+6. Low-Level Encryption:
 The scanner will analyze encryption implementations to identify potential weaknesses and recommend stronger encryption practices.
 
-6. Web.config Misconfigurations
+7. Web.config Misconfigurations
 The scanner will inspect the web.config files to identify security misconfigurations that may expose sensitive information or create security loopholes.
 
-7. Unparameterized Queries:
+8. Unparameterized Queries:
 The scanner will detect SQL queries that are not parameterized, which can lead to SQL injection vulnerabilities.
 
-8. Cookies Misconfigurations
+9. Cookies Misconfigurations
 The scanner will identify cookies misconfigurations, such as using insecure attributes or not setting the secure flag for sensitive cookies, which may lead to unauthorized access or session hijacking.
 
-9. File Upload Vulnerabilities
+10. File Upload Vulnerabilities
 The scanner will assess file upload functionality for security vulnerabilities, such as unrestricted file types, missing file type validation, or insecure handling of uploaded files.
 ```
 

@@ -1,10 +1,10 @@
-ASP.NET App Scanner with PowerShell
+#  ASP.NET App Scanner with PowerShell
 
 
-Overview
+## Overview
 This repository contains a PowerShell script that serves as an ASP.NET app scanner. The script can help identify potential security vulnerabilities in your ASP.NET applications. The scanner targets various aspects of web application security, including cookies, missing CSRF tokens, file uploads, hard-coded credentials, unencoded URLs, input validation, low-level encryption, web.config files, and unparameterized queries.
 
-Features
+## Features
 Scan for missing CSRF tokens in HTML forms.
 Detect hard-coded credentials in source code files.
 Identify unencoded URLs that may lead to potential security risks.
@@ -23,15 +23,15 @@ Navigate to the directory where the aspnet_scanner.ps1 script is located.
 
 Run the scanner script by executing the following command:
 
-PS> .\aspnet_scanner.ps1 
+```PS> .\aspnet_scanner.ps1 ```
 Once Prompted for a path, paste the "path/to/your/aspnet_app_directory" and hit enter.
 
 The scanner will start analyzing the files in the specified directory and its subdirectories.
 
 After the scan is complete, the script will display any detected vulnerabilities and provide recommendations for mitigating the issues.
 
-Vulnerabilities Detected
-1. Missing CSRF Tokens:
+## Vulnerabilities Detected
+```1. Missing CSRF Tokens:
 The scanner will identify HTML forms that use the POST method but do not include a hidden field with a CSRF token. CSRF protection is crucial to prevent Cross-Site Request Forgery attacks.
 
 2. Hard-Coded Credentials:
@@ -57,16 +57,16 @@ The scanner will identify cookies misconfigurations, such as using insecure attr
 
 9. File Upload Vulnerabilities
 The scanner will assess file upload functionality for security vulnerabilities, such as unrestricted file types, missing file type validation, or insecure handling of uploaded files.
-
-Contributing
+```
+## Contributing
 Contributions to the ASP.NET App Scanner with PowerShell are welcome! If you find any issues or have suggestions for improvements, please feel free to submit a pull request or open an issue in the repository.
 
-License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-**Disclaimer**
+## **Disclaimer**
 Please note The ASP.NET App Scanner is a tool intended for security testing and research purposes only. You must obtain explicit permission from the application owner before scanning any website or application that you do not own or do not have explicit authorization to test. Unauthorized scanning of websites or applications may be illegal and is strictly prohibited.
 
 The author of this script is not responsible for any misuse, unauthorized access, or damage caused by using this tool. Use the scanner at your own risk and with proper authorization.
-**NOTICE**
+## **NOTICE**
 The powershell scripts may print results related to false-positives.

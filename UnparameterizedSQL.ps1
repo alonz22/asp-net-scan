@@ -17,8 +17,14 @@ function Check-UnparameterizedSQLQueries {
         $lineNumber++
         foreach ($pattern in $queryPatterns) {
             if ($line -match $pattern) {
-                Write-Host "Unparameterized SQL Query found in: $file (Line: $lineNumber)" -ForegroundColor Red
-                Write-Host "`nLine: $line" -ForegroundColor Red
+                $queryString = $matches[0]
+                $parameterSuggestions = Get-ParameterSuggestions $queryString
+                Write-Host "Unparameterized SQL Query found in: $file (Line: $lineNumber)" -ForegroundColor Yellow
+                Write-Host "`nLine: $line" -ForegroundColor Yellow
+                Write-Host "`nSuggested parameter values:`n"
+                foreach ($param in $parameterSuggestions) {
+                    Write-Host "`t$param" -ForegroundColor Red
+                }
                 $matchesFound = $true
                 $matchCounter++  # Increment the match counter
                 break
@@ -27,6 +33,24 @@ function Check-UnparameterizedSQLQueries {
     }
     return $matchesFound, $matchCounter
 }
+
+function Get-ParameterSuggestions {
+    param([string]$queryString)
+
+    # Use regular expressions to find numbers in the query string
+    $numberMatches = $queryString | Select-String -Pattern "\b\d+\b" -AllMatches
+
+    $suggestions = @()
+    foreach ($match in $numberMatches.Matches) {
+        # Suggest parameter names for each number found in the query
+        $paramName = "paramNameReplacement , " + $match.Value
+       # $suggestions += "@$paramName" 
+       $suggestions += "It is safer to user parameters for the following in your code: " + "command.Parameters.AddWithValue(@$paramName)`n"
+    }
+
+    return $suggestions
+}
+
 
 # Prompt user for path to scan
 $path = Read-Host "Enter the path to scan"
@@ -56,23 +80,34 @@ foreach ($file in $allFiles) {
 }
 
 if ($matchesFound) {
-    Write-Host "`n`n`nSQL Injection Attacks: Without parameterization, malicious input can be directly injected into queries, allowing attackers to manipulate and extract sensitive data or execute unauthorized commands.
-    `nData Corruption and Loss: Lack of parameterization may lead to accidental data corruption or deletion, `nas special characters or incorrect input can affect the integrity of the database.
+    Write-Host "`n`n`nSQL Injection Attacks: Without parameterization, malicious input can be directly injected into queries, 
+    `nallowing attackers to manipulate and extract sensitive data or execute unauthorized commands.
+    `nData Corruption and Loss: Lack of parameterization may lead to accidental data corruption or deletion, 
+    `nas special characters or incorrect input can affect the integrity of the database.
     `nPerformance and Scalability Issues: Non-parameterized queries hinder query plan reuse, impacting performance and scalability, 
-    `nespecially in high-traffic environments, increasing the risk of slow response times and resource consumption." -ForegroundColor DarkYellow
+    `nespecially in high-traffic environments, increasing the risk of slow response times and resource consumption.`n" 
 
     # Calculate the score and severity based on the total match count
     if ($matchCounter -ge 20) {
         $score = "10/10"
         $Severity = "CRITICAL"
-    } elseif ($matchCounter -ge 7) {
-        $score = "9.8/10"
-        $Severity = "CRITICAL"
-    } elseif ($matchCounter -ge 5) {
+    } 
+    elseif ($matchCounter -ge 15) {
         $score = "9/10"
+        $Severity = "CRITICAL"
+    }
+    elseif ($matchCounter -ge 10) {
+        $score = "8.5/10"
+        $Severity = "HIGH"
+    }
+    elseif ($matchCounter -ge 7) {
+        $score = "7.3/10"
+        $Severity = "HIGH"
+    } elseif ($matchCounter -ge 5) {
+        $score = "6.5/10"
         $Severity = "HIGH"
     } elseif ($matchCounter -ge 4) {
-        $score = "6/10"
+        $score = "5"
         $Severity = "MEDIUM"
     } elseif ($matchCounter -ge 2) {
         $score = "4/10"
@@ -83,8 +118,8 @@ if ($matchesFound) {
     }
     
     Write-Host "`nTotal Matches Found: $matchCounter" -ForegroundColor Green
-    Write-Host "Severity: $Severity" -ForegroundColor DarkYellow
-    Write-Host "Score: $score" -ForegroundColor DarkYellow
+    Write-Host "`nSeverity: $Severity" -ForegroundColor Yellow
+    Write-Host "`nScore: $score" -ForegroundColor Yellow
 } else {
     Write-Host "`nNo Matches Found For Scanned Vulnerabilities."
 }

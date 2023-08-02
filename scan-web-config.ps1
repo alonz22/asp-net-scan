@@ -113,17 +113,19 @@ if ($matches) {
     if ($count -ge 5) {
         $score = "8/10"
         $Severity = "HIGH"
-    } if ($count -ge 2) {
-        $score = "6.5/10"
-        $Severity = "MEDIUM"
     } 
     if ($count -ge 2) {
         $score = "3/10"
         $Severity = "MEDIUM"
     }
+    if ($count -ge 2) {
+        $score = "6.5/10"
+        $Severity = "MEDIUM"
+    } 
+    
     if ($count -ge 8) {
         $score = "9.5/10"
-        $Severity = "MEDIUM"
+        $Severity = "Critical"
     } 
     Write-Host "`nTotal Vulnerability Matches Found: $count" -ForegroundColor Green
     Write-Host "`nSeverity: $Severity" -ForegroundColor DarkYellow

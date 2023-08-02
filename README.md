@@ -69,7 +69,7 @@ The scanner will detect SQL queries that are not parameterized, which can lead t
 
 9. Cookies Misconfigurations
 The scanner will identify cookies misconfigurations, such as using insecure attributes or
- not setting the secure flag for sensitive cookies, which may lead to
+not setting the secure flag for sensitive cookies, which may lead to
 unauthorized access or session hijacking.
 
 10. File Upload Vulnerabilities

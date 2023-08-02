@@ -58,6 +58,31 @@ The scanner will identify cookies misconfigurations, such as using insecure attr
 9. File Upload Vulnerabilities
 The scanner will assess file upload functionality for security vulnerabilities, such as unrestricted file types, missing file type validation, or insecure handling of uploaded files.
 ```
+
+##Output Sample for Web.Config Scanning:
+
+```powershell
+Warning: C:\SomePath\Web.config does not contain <httpErrors> element.
+Not using custom errors may expose sensitive information.
+Warning: C:\SomePath\Web.config does not block the following potentially dangerous file extensions:
+  .exe
+  .cmd
+  .dll
+Potential issue in C:\SomePath\Web.config: Line 1
+Database name contains the username.
+Password length is less than 10 characters.
+Password contains the username or the database name.
+
+These vulnerabilities could lead to security breaches, data leaks, unauthorized access, and other potential threats to the web application and its users. 
+    
+It is crucial to address and remediate these issues promptly to enhance the application's security posture.
+
+Total Vulnerability Matches Found: 10
+
+Severity: Critical
+```
+
+Total Vulnerabilities Score: 9.5/10
 ## Contributing
 Contributions to the ASP.NET App Scanner with PowerShell are welcome! If you find any issues or have suggestions for improvements, please feel free to submit a pull request or open an issue in the repository.
 

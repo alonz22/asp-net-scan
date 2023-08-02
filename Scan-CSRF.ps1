@@ -1,4 +1,4 @@
-﻿function Check-CSRFToken {
+function Check-CSRFToken {
     param($file)
 
     $content = Get-Content -Path $file
@@ -91,13 +91,18 @@ if (-not (Test-Path $path -PathType Container)) {
     exit
 }
 
-# Get all .aspx files in the given path recursively
-$aspxFiles = Get-ChildItem -Path $path -Filter "*.aspx" -Recurse
 
-# Perform checks on each .aspx file
+# Get all .aspx, .aspx.cs, and .cs files in the given path recursively
+$aspxFiles = Get-ChildItem -Path $path -Filter "*.aspx" -Recurse
+$aspxCSFiles = Get-ChildItem -Path $path -Filter "*.aspx.cs" -Recurse
+$csFiles = Get-ChildItem -Path $path -Filter "*.cs" -Recurse
+
+$allFiles = $aspxFiles + $aspxCSFiles + $csFiles  # Combine all the file arrays
+
 $matchesFound = $false
 $matchCounter = 0  # Initialize total match counter
-foreach ($file in $aspxFiles) {
+
+foreach ($file in $allFiles) {
     $matches, $count = Check-CSRFToken $file.FullName
     if ($matches) {
         $matchesFound = $true
@@ -106,9 +111,9 @@ foreach ($file in $aspxFiles) {
 }
 
 if ($matchesFound) {
-    Write-Host "Failing to implement CSRF protection in your web application can expose users to Cross-Site Request Forgery attacks. 
+    Write-Host "`n`nFailing to implement CSRF protection in your web application can expose users to Cross-Site Request Forgery attacks. 
     `nBy ensuring the presence of secure, hidden CSRF tokens within forms and associating them with session variables, 
-    `nyou can prevent attackers from forging malicious requests and protect user data and actions." -ForegroundColor DarkYellow
+    `nyou can prevent attackers from forging malicious requests and protect user data and actions." 
 
     # Calculate the score based on the total match count
     $Severity = "LOW"
@@ -125,7 +130,7 @@ if ($matchesFound) {
     } 
     
    Write-Host "`nTotal Vulnerability Matches Found: $matchCounter" -ForegroundColor Green
-    Write-Host "`nSeverity: $Severity" -ForegroundColor DarkYellow
+    Write-Host "`nSeverity: $Severity" -ForegroundColor Red
     Write-Host "`nTotal Vulnerabilities Score: $score" -ForegroundColor DarkYellow
 }
 else {

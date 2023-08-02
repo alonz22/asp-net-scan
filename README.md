@@ -35,34 +35,47 @@ After the scan is complete, the script will display any detected vulnerabilities
 ## Vulnerabilities Detected
 ```
 1. Missing CSRF Tokens:
-The scanner will identify HTML forms that use the POST method but do not include a hidden field with a CSRF token. CSRF protection is crucial to prevent Cross-Site Request Forgery attacks.
+The scanner will identify HTML forms that use the POST method but do not include a hidden
+field with a CSRF token.
+ CSRF protection is crucial to prevent Cross-Site Request Forgery attacks.
 
 2. Hard-Coded Credentials:
-The scanner will search for instances of hard-coded credentials in the source code. Storing credentials directly in the code can lead to security breaches if the code is exposed.
+The scanner will search for instances of hard-coded credentials in the source code.
+Storing credentials directly in the code can lead to security breaches if the code is exposed.
 
 3. Unencoded URLs:
-Unencoded URLs can lead to security vulnerabilities, such as data exposure or injection attacks. The scanner will detect unencoded URLs and recommend proper encoding.
+Unencoded URLs can lead to security vulnerabilities, such as data exposure or injection attacks.
+ The scanner will detect unencoded URLs and recommend proper encoding.
 
 4. Insecure Input Validation:
-The scanner will look for insecure input validation practices that could allow malicious input to compromise the application's security.
+The scanner will look for insecure input validation practices that could allow malicious
+input to compromise the application's security.
 
 5. Client Side Validation:
-The `Scan-Input-Validation.ps1` also identifies client-side validation implementations, which are less secure than server-side validation mechanisms. It helps detect potential vulnerabilities that may expose applications to security risks and data manipulation by malicious users.
+The `Scan-Input-Validation.ps1` also identifies client-side validation implementations,
+which are less secure than server-side validation mechanisms.
+It helps detect potential vulnerabilities that may expose applications
+to security risks and data manipulation by malicious users.
 
 6. Low-Level Encryption:
 The scanner will analyze encryption implementations to identify potential weaknesses and recommend stronger encryption practices.
 
 7. Web.config Misconfigurations
-The scanner will inspect the web.config files to identify security misconfigurations that may expose sensitive information or create security loopholes.
+The scanner will inspect the web.config files to identify security misconfigurations that
+may expose sensitive information or create security loopholes.
 
 8. Unparameterized Queries:
 The scanner will detect SQL queries that are not parameterized, which can lead to SQL injection vulnerabilities.
 
 9. Cookies Misconfigurations
-The scanner will identify cookies misconfigurations, such as using insecure attributes or not setting the secure flag for sensitive cookies, which may lead to unauthorized access or session hijacking.
+The scanner will identify cookies misconfigurations, such as using insecure attributes or
+ not setting the secure flag for sensitive cookies, which may lead to
+unauthorized access or session hijacking.
 
 10. File Upload Vulnerabilities
-The scanner will assess file upload functionality for security vulnerabilities, such as unrestricted file types, missing file type validation, or insecure handling of uploaded files.
+The scanner will assess file upload functionality for
+security vulnerabilities, such as unrestricted file types, missing file type validation,
+or insecure handling of uploaded files.
 ```
 
 ## Output Sample for Web.Config Scanning:

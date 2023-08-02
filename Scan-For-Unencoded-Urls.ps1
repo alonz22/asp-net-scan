@@ -1,4 +1,4 @@
-﻿function Check-NotURLEncodedLinks {
+function Check-NotURLEncodedLinks {
     param($file)
 
     $content = Get-Content -Path $file
@@ -40,12 +40,17 @@ if (-not (Test-Path $path -PathType Container)) {
     exit
 }
 
-# Get all .aspx files in the given path recursively
+# Get all .aspx, .aspx.cs, and .cs files in the given path recursively
 $aspxFiles = Get-ChildItem -Path $path -Filter "*.aspx" -Recurse
+$aspxCSFiles = Get-ChildItem -Path $path -Filter "*.aspx.cs" -Recurse
+$csFiles = Get-ChildItem -Path $path -Filter "*.cs" -Recurse
+
+$allFiles = $aspxFiles + $aspxCSFiles + $csFiles  # Combine all the file arrays
 
 $matchesFound = $false
 $matchCounter = 0  # Initialize total match counter
-foreach ($file in $aspxFiles) {
+
+foreach ($file in $allFiles) {
     $matches, $count = Check-NotURLEncodedLinks $file.FullName
     if ($matches) {
         $matchesFound = $true

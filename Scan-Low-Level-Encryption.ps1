@@ -69,7 +69,7 @@ if ($matchesFound) {
         $Severity = "Medium"
     } if ($matchCounter -ge 3) {
         "7/10"
-        $Severity = "Hgih"
+        $Severity = "High"
     } 
     if ($matchCounter -ge 5) {
         "9.8/10"
